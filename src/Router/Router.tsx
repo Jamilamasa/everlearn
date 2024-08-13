@@ -1,9 +1,10 @@
 import { createBrowserRouter } from "react-router-dom";
-import SignUp from "../Pages/SignUp";
+import SignIn from "../Pages/Auth/SignIn";
+import SignUp from "../Pages/Auth/SignUp";
 import ProtectedRoute from "./ProtectedRoute";
 export const ROOT: string = "/";
-export const LOGIN: string = "/login";
-export const SIGNUP: string = "/register";
+export const SIGNIN: string = "/signin";
+export const SIGNUP: string = "/signup";
 
 export const router = createBrowserRouter([
   {
@@ -14,6 +15,6 @@ export const router = createBrowserRouter([
       </ProtectedRoute>
     ),
   },
-  { path: LOGIN, element: <div>Login Page</div> },
+  { path: SIGNIN, element: <SignIn/> },
   { path: SIGNUP, element: <SignUp/> },
 ]);

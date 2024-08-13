@@ -1,14 +1,13 @@
 /** @type {import('tailwindcss').Config} */
 export default {
-  content: [
-    "./index.html",
-    "./src/**/*.{js,ts,jsx,tsx}",
-  ],
+  content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
+  darkMode: 'selector',
   theme: {
-    colors: {
-      'custom-blue': '#00599b',
+    extend: {
+      colors: {
+        customBlue: "#00599b", customLightBlue: "#2F3367",
+      },
     },
-    extend: {},
   },
   plugins: [],
-}
+};
