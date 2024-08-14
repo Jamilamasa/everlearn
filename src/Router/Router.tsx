@@ -11,7 +11,7 @@ export const router = createBrowserRouter([
     path: ROOT,
     element: (
       <ProtectedRoute>
-        <div>Hello world!</div>
+        <div>If you see this page, you are logged in</div>
       </ProtectedRoute>
     ),
   },

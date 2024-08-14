@@ -1,25 +1,51 @@
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import { usePasswordToggle } from "../../Hooks/functionHooks";
 import { SIGNIN, SIGNUP } from "../../Router/Router";
 
 type Props = { title: "SignUp" | "SignIn" };
+interface ILoginDetails {
+  email: undefined | string;
+  password: undefined | string;
+  fullName?: undefined | string;
+}
 
 const AuthForm = (props: Props) => {
   const [InputType, Icon] = usePasswordToggle();
+  const [loginDetails, setLoginDetails] = useState<ILoginDetails>({
+    email: undefined,
+    password: undefined,
+  });
+  const [registerDetails, setRegisterDetails] = useState<ILoginDetails>({
+    email: undefined,
+    password: undefined,
+    fullName: undefined,
+  });
+
+  const isSignUp: boolean = props.title === "SignUp";
+  const isSignIn: boolean = props.title === "SignIn";
+
+  const handleInputChange =
+    (field: keyof ILoginDetails) =>
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      const value = e.target.value;
+      if (isSignUp) {
+        setRegisterDetails((prevState) => ({ ...prevState, [field]: value }));
+      } else if (isSignIn) {
+        setLoginDetails((prevState) => ({ ...prevState, [field]: value }));
+      }
+    };
+
   return (
-    <div className="flex-[2] h-full p-20 w-full">
-      <div className="h-full w-96 m-auto mt-24">
+    <div className="flex-[2] h-full lg:p-20 lg:w-full">
+      <div className="lg:h-full w-80 lg:w-96 m-auto mt-24">
         <h1 className="text-customBlue font-[700] text-3xl mb-5">
-          {props.title === "SignUp"
-            ? "Sign Up"
-            : props.title === "SignIn"
-            ? "Sign In"
-            : ""}
+          {isSignUp ? "Sign Up" : isSignIn ? "Sign In" : ""}
         </h1>
         <p className="text-customLightBlue mb-16">
-          {props.title === "SignUp"
+          {isSignUp
             ? "Please fill your information below"
-            : props.title === "SignIn"
+            : isSignIn
             ? "Welcome Back Learner"
             : ""}
         </p>
@@ -43,21 +69,37 @@ const AuthForm = (props: Props) => {
               </svg>
             </div>
             <input
-              type="text"
+              type="email"
               id="nameInput"
-              className="pl-10 block px-2.5 pb-2.5 pt-4 w-full text-sm text-[#3C4071] bg-[#fff]  rounded-[10px]  appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-[#80BEFC] focus:border-[3px] focus:bg-[#fff] placeholder-shown:bg-[#F5F5F7] peer"
+              className={`pl-10 block px-2.5 pb-2.5 pt-4 w-full text-sm text-[#3C4071] bg-[#fff] ${
+                isSignUp &&
+                registerDetails.email &&
+                "border-[#80BEFC] border-[3px]"
+              } ${
+                isSignIn &&
+                loginDetails.email &&
+                "border-[#80BEFC] border-[3px]"
+              } rounded-[10px]   appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-[#80BEFC] focus:border-[3px] focus:bg-[#fff] placeholder-shown:bg-[#F5F5F7] peer`}
               placeholder=" "
               autoComplete="off"
+              value={
+                isSignUp
+                  ? registerDetails.email
+                  : isSignIn
+                  ? loginDetails.email
+                  : ""
+              }
+              onChange={handleInputChange("email")}
             />
             <label
               htmlFor="nameInput"
               className="absolute text-sm text-[#3C4071] dark:text-[#3C4071] duration-300 bg-white transform -translate-y-4 scale-75 top-2 z-10 origin-[0] px-2  ml-9 peer-focus:px-2 peer-focus:mx-2 peer-focus:text-[#3C4071] peer-focus:dark:text-[#3C4071] peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:bg-white peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1 peer-placeholder-shown:text-[#8B8FA8]  peer-placeholder-shown:bg-transparent"
             >
-              Name
+              Email
             </label>
           </div>
 
-          {props.title === "SignUp" && (
+          {isSignUp && (
             <div className="relative mb-8">
               <div className="absolute inset-y-0 start-0 top-0 flex items-center ps-3.5 pointer-events-none">
                 <svg
@@ -76,19 +118,27 @@ const AuthForm = (props: Props) => {
                 </svg>
               </div>
               <input
-                type="tel"
-                inputMode="tel"
-                id="mobileNumberInput"
-                className=" pl-10 block px-2.5 pb-2.5 pt-4 w-full text-sm text-[#3C4071] bg-[#fff]  rounded-[10px]  appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-[#80BEFC] focus:border-[3px] focus:bg-[#fff] placeholder-shown:bg-[#F5F5F7] peer"
+                type="text"
+                className={`pl-10 block px-2.5 pb-2.5 pt-4 w-full text-sm text-[#3C4071] bg-[#fff] ${
+                  isSignUp &&
+                  registerDetails.fullName &&
+                  "border-[#80BEFC] border-[3px]"
+                } ${
+                  isSignIn &&
+                  loginDetails.fullName &&
+                  "border-[#80BEFC] border-[3px]"
+                } rounded-[10px]   appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-[#80BEFC] focus:border-[3px] focus:bg-[#fff] placeholder-shown:bg-[#F5F5F7] peer`}
                 placeholder=" "
                 pattern="\+?[0-9]*"
                 autoComplete="off"
+                value={isSignUp ? registerDetails.fullName : ""}
+                onChange={handleInputChange("fullName")}
               />
               <label
                 htmlFor="mobileNumberInput"
                 className="absolute text-sm text-[#3C4071] dark:text-[#3C4071] duration-300 bg-white transform -translate-y-4 scale-75 top-2 z-10 origin-[0] px-2  ml-9 peer-focus:px-2 peer-focus:mx-2 peer-focus:text-[#3C4071] peer-focus:dark:text-[#3C4071] peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:bg-white peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1 peer-placeholder-shown:text-[#8B8FA8]  peer-placeholder-shown:bg-transparent"
               >
-                Mobile number
+                Name
               </label>
             </div>
           )}
@@ -114,8 +164,24 @@ const AuthForm = (props: Props) => {
             <input
               type="password"
               id="password"
-              className="pl-10 block px-2.5 pb-2.5 pt-4 w-full text-sm text-[#3C4071] bg-[#fff]  rounded-[10px]  appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-[#80BEFC] focus:border-[3px] focus:bg-[#fff] placeholder-shown:bg-[#F5F5F7] peer"
+              className={`pl-10 block px-2.5 pb-2.5 pt-4 w-full text-sm text-[#3C4071] bg-[#fff] ${
+                isSignUp &&
+                registerDetails.password &&
+                "border-[#80BEFC] border-[3px]"
+              } ${
+                isSignIn &&
+                loginDetails.password &&
+                "border-[#80BEFC] border-[3px]"
+              } rounded-[10px]   appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-[#80BEFC] focus:border-[3px] focus:bg-[#fff] placeholder-shown:bg-[#F5F5F7] peer`}
               placeholder=" "
+              value={
+                isSignUp
+                  ? registerDetails.password
+                  : isSignIn
+                  ? loginDetails.password
+                  : ""
+              }
+              onChange={handleInputChange("password")}
             />
             <label
               htmlFor="password"
@@ -138,15 +204,19 @@ const AuthForm = (props: Props) => {
         <hr />
         <div className="mt-6 flex justify-between">
           {/* TODO: Add the link here */}
-          {props.title === "SignUp" ? 
+          {isSignUp ? (
             <>
               <p>Already have an account&#63;</p>
-              <Link to={SIGNIN} className="text-customBlue">Login to your account</Link>
+              <Link to={SIGNIN} className="text-customBlue">
+                Login to your account
+              </Link>
             </>
-          : props.title === "SignIn" ? (
+          ) : isSignIn ? (
             <>
               <p>Don't have an account&#63;</p>
-              <Link to={SIGNUP} className="text-customBlue">Click here to register</Link>
+              <Link to={SIGNUP} className="text-customBlue">
+                Click here to register
+              </Link>
             </>
           ) : (
             ""

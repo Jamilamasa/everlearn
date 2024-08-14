@@ -5,7 +5,7 @@ import { SIGNIN } from "./Router";
 type Props = { children: ReactNode };
 
 const ProtectedRoute = (props: Props) => {
-  const [auth, setAuth] = useState(true);
+  const [auth, setAuth] = useState(false);
   if (!auth) {
     return <Navigate to={SIGNIN} />;
   }
