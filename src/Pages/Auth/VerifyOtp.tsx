@@ -5,16 +5,14 @@ import { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 
-type Props = {};
-
-const VerifyOtp = (props: Props) => {
+const VerifyOtp = () => {
   const [otp, setOtp] = useState("");
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState<boolean>(false);
   const navigate = useNavigate();
   let { userId } = useParams();
 
   const handleSetOtp = (otp: string) => {
-    setOtp((prevState) => otp);
+    setOtp(() => otp);
   };
 
   const handleVerifyOtp = async () => {
@@ -40,7 +38,7 @@ const VerifyOtp = (props: Props) => {
 
   return (
     <div className="h-screen w-full flex justify-center items-center">
-      <InputOTPForm handleSetOtp={handleSetOtp} handleVerifyOtp={handleVerifyOtp}/>
+      <InputOTPForm handleSetOtp={handleSetOtp} handleVerifyOtp={handleVerifyOtp} loadingState={loading}/>
     </div>
   );
 };
