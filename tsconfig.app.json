@@ -1,5 +1,11 @@
 {
   "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@/*": [
+        "./src/*"
+      ]
+    },
     "composite": true,
     "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.app.tsbuildinfo",
     "target": "ES2020",
@@ -11,6 +17,7 @@
     /* Bundler mode */
     "moduleResolution": "node",
    // "allowImportingTsExtensions": true,
+   "useUnknownInCatchVariables": false,
     "resolveJsonModule": true,
     "isolatedModules": true,
     "moduleDetection": "force",
