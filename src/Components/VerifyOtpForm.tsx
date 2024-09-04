@@ -26,7 +26,6 @@ const FormSchema = z.object({
 
 export function InputOTPForm(props: {
   handleSetOtp: (otp: string) => void;
-  handleVerifyOtp: () => Promise<void>;
   loadingState: boolean;
 }) {
   const form = useForm<z.infer<typeof FormSchema>>({
@@ -38,7 +37,6 @@ export function InputOTPForm(props: {
 
   const onSubmit = async (data: z.infer<typeof FormSchema>) => {
     props.handleSetOtp(data.pin);
-    await props.handleVerifyOtp();
   };
 
   return (

@@ -1,7 +1,7 @@
 import { InputOTPForm } from "@/Components/VerifyOtpForm";
 import { SIGNIN } from "@/Router/Router";
 import AuthServices from "@/Services/Auth.services";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 
@@ -14,13 +14,11 @@ const VerifyOtp = () => {
   const handleSetOtp = (otp: string) => {
     setOtp(() => otp);
   };
-
   const handleVerifyOtp = async () => {
-    console.log(otp)
     setLoading(true);
     try {
       if (userId && otp.length === 6) {
-        const response = await AuthServices.verifyOtp({ otp, email: userId });
+        const response = await AuthServices.verifyOtp({ otp, uid: userId });
         toast.success(`${response.message} proceed to login`);
         setLoading(false);
         navigate(SIGNIN)
@@ -36,9 +34,15 @@ const VerifyOtp = () => {
     }
   };
 
+  // Run when you click on submit button on the OTP form component
+  useEffect(()=>{if(otp.length === 6){
+    handleVerifyOtp();
+  }}, [otp])
+
+
   return (
     <div className="h-screen w-full flex justify-center items-center">
-      <InputOTPForm handleSetOtp={handleSetOtp} handleVerifyOtp={handleVerifyOtp} loadingState={loading}/>
+      <InputOTPForm handleSetOtp={handleSetOtp} loadingState={loading}/>
     </div>
   );
 };
