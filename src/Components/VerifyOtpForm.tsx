@@ -16,6 +16,7 @@ import {
   InputOTPGroup,
   InputOTPSlot,
 } from "@/Components/ui/input-otp";
+import loader from "../assets/icons/load.gif";
 
 const FormSchema = z.object({
   pin: z.string().min(6, {
@@ -26,6 +27,7 @@ const FormSchema = z.object({
 export function InputOTPForm(props: {
   handleSetOtp: (otp: string) => void;
   handleVerifyOtp: () => Promise<void>;
+  loadingState: boolean;
 }) {
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
@@ -72,7 +74,13 @@ export function InputOTPForm(props: {
           type="submit"
           className="bg-customBlue p-4 rounded-lg text-white w-40 hover:bg-customLightBlue"
         >
-          Submit
+           {props.loadingState ? (
+                <img className="h-[25px]" src={loader} alt="Loading..." />
+              ) : (
+                <>
+                 Submit
+                </>
+              )}
         </Button>
       </form>
     </Form>
