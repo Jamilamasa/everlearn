@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import { usePasswordToggle } from "../../Hooks/functionHooks";
+//import { usePasswordToggle } from "../../Hooks/functionHooks";
 import { ROOT, SIGNIN, SIGNUP, VERIFYOTP } from "../../Router/Router";
 import AuthService from "../../Services/Auth.services";
 import loader from "../../assets/icons/load.gif";

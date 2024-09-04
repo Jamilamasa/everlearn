@@ -1,7 +1,6 @@
 import logoIcon from "../assets/icons/logoIcon.png";
-type Props = {}
 
-const Logo = (props: Props) => {
+const Logo = () => {
   return (
     <div className="flex gap-3 justify-center items-center h-full">
     <img
