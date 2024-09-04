@@ -1,19 +1,24 @@
+import VerifyOtp from "@/Pages/Auth/VerifyOtp";
 import { createBrowserRouter } from "react-router-dom";
-import SignUp from "../Pages/SignUp";
+import SignIn from "../Pages/Auth/SignIn";
+import SignUp from "../Pages/Auth/SignUp";
 import ProtectedRoute from "./ProtectedRoute";
 export const ROOT: string = "/";
-export const LOGIN: string = "/login";
-export const SIGNUP: string = "/register";
+export const SIGNIN: string = "/signin";
+export const SIGNUP: string = "/signup";
+export const VERIFYOTP: string = '/verifyotp';
 
 export const router = createBrowserRouter([
   {
     path: ROOT,
     element: (
       <ProtectedRoute>
-        <div>Hello world!</div>
+        <div>If you see this page, you are logged in</div>
       </ProtectedRoute>
     ),
+    children: [{index: true, element: <>Dashboard</>}]
   },
-  { path: LOGIN, element: <div>Login Page</div> },
+  { path: SIGNIN, element: <SignIn/> },
   { path: SIGNUP, element: <SignUp/> },
+  { path: `${VERIFYOTP}/:userId`, element: <VerifyOtp/> },
 ]);
