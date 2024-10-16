@@ -1,10 +1,9 @@
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import { toast } from "react-toastify";
+import { Link } from "react-router-dom";
 //import { usePasswordToggle } from "../../Hooks/functionHooks";
-import { ROOT, SIGNIN, SIGNUP, VERIFYOTP } from "../../Router/Router";
-import AuthService from "../../Services/Auth.services";
+import { SIGNIN, SIGNUP } from "../../Router/Router";
 import loader from "../../assets/icons/load.gif";
+import { useLogin, useRegister } from "@/Hooks/auth.hooks";
 
 type Props = { title: "SignUp" | "SignIn" };
 interface ILoginDetails {
@@ -24,8 +23,12 @@ const AuthForm = (props: Props) => {
     password: undefined,
     fullName: undefined,
   });
-  const [loading, setLoading] = useState<boolean>(false);
-  const navigate = useNavigate();
+
+  // Login Fn
+  const { mutate:loginMutate, isPending: loginIsPending } = useLogin();
+  // Register fn
+  const { mutate:registerMutate, isPending: registerIsPending } = useRegister();
+
 
   // To render sign in components or sign up components
   const isSignUp: boolean = props.title === "SignUp";
@@ -50,47 +53,19 @@ const AuthForm = (props: Props) => {
       registerDetails.email &&
       registerDetails.password
     ) {
-      setLoading(true);
-      try {
-        const response = await AuthService.register({
-          fullName: registerDetails.fullName,
-          email: registerDetails.email,
-          password: registerDetails.password,
-        });
-        toast.success(response.message);
-        setLoading(false);
-        // TODO: PASS UID INSTEAD OF EMAIL
-        navigate(`${VERIFYOTP}/${response.user_id}`);
-      } catch (error) {
-        setLoading(false);
-        console.log(error);
-        toast.error(error.response.data.message);
-      }
+      registerMutate({email: registerDetails.email, password: registerDetails.password, fullName: registerDetails.fullName})
     }
   };
 
   // Login
   const handleSignIn = async () => {
     if (loginDetails.email && loginDetails.password) {
-      setLoading(true);
-      try {
-        const response = await AuthService.login({
-          email: loginDetails.email,
-          password: loginDetails.password,
-        });
-        sessionStorage.setItem("k7h4p9d2wq8c6n", response.token);
-        navigate(ROOT);
-        toast.success("Login Successful");
-        setLoading(false);
-      } catch (error) {
-        setLoading(false);
-        toast.error(error.response.data.message);
-      }
+      loginMutate({ email: loginDetails.email, password: loginDetails.password });
     }
   };
 
   return (
-    <div className="flex-[2] h-full lg:p-20 lg:w-full">
+    <div className="flex-[2] lg:p-20 lg:w-full">
       <div className="lg:h-full w-80 lg:w-96 m-auto mt-24">
         <h1 className="text-customBlue font-[700] text-3xl mb-5">
           {isSignUp ? "Sign Up" : isSignIn ? "Sign In" : ""}
@@ -261,7 +236,7 @@ const AuthForm = (props: Props) => {
               type="submit"
               className="bg-customBlue p-4 rounded-lg text-white w-40 flex justify-between"
             >
-              {loading ? (
+              {loginIsPending || registerIsPending? (
                 <img className="h-[25px]" src={loader} alt="Loading..." />
               ) : (
                 <>
@@ -274,7 +249,6 @@ const AuthForm = (props: Props) => {
         </form>
         <hr />
         <div className="mt-6 flex justify-between">
-          {/* TODO: Add the link here */}
           {isSignUp ? (
             <>
               <p>Already have an account&#63;</p>

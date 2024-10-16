@@ -17,7 +17,7 @@ const AuthPage = (props: Props) => {
   }, []);
 
   if(auth !== 'loading' && auth){return <Navigate to={ROOT} />;}
-  if(auth === 'loading'){return <>loading...</>}
+  if(auth === 'loading'){return <></>}
   return (
     <div className="flex h-screen">
       <AuthLogoSection />

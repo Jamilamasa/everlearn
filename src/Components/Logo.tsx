@@ -1,16 +1,22 @@
+import React from 'react';
 import logoIcon from "../assets/icons/logoIcon.png";
 
-const Logo = () => {
-  return (
-    <div className="flex gap-3 justify-center items-center h-full">
-    <img
-      src={logoIcon}
-      alt="Logo Icon"
-      className="w-[37.02px] h-[49.41px]"
-    />
-    <h1 className="text-custom-blue text-3xl">everlearn</h1>
-  </div>
-  )
+interface LogoProps {
+  imgClassName?: string;
+  textClassName?: string;
 }
 
-export default Logo
+const Logo: React.FC<LogoProps> = ({ imgClassName = "w-[37.02px] h-[49.41px]", textClassName = "text-custom-blue text-3xl" }) => {
+  return (
+    <div className="flex gap-3">
+      <img
+        src={logoIcon}
+        alt="Logo Icon"
+        className={imgClassName} // img class passed via props
+      />
+      <h1 className={`${textClassName}`}>everlearn</h1>
+    </div>
+  );
+};
+
+export default Logo;
