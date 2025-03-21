@@ -13,13 +13,8 @@ const Navbar = () => {
     const menuItems = [
         { name: "Home", path: "/home" },
         { name: "Courses", path: "/courses" },
-        // { name: "Program", path: "/program" },
+        { name: "Program", path: "/program" },
     ];
-
-    interface MenuItem {
-        name: string;
-        path: string;
-    }
 
     const isActive = (path: string): string => activePage === path ? "border-b-4 px-5 py-1 border-blue-800" : "";
 

@@ -12,13 +12,9 @@ const Footer = () => {
   const menuItems = [
     { name: "Home", path: "/home" },
     { name: "Courses", path: "/courses" },
-    // { name: "Program", path: "/program" },
+    { name: "Program", path: "/program" },
   ];
 
-  interface MenuItem {
-    name: string;
-    path: string;
-  }
   return (
     <div className="bg-[#CCDEEB33] mt-7">
       <div className=" grid grid-rows-1 md:py-36 py-20 mx-5 md:mx-40">
