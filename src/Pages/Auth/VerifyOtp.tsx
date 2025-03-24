@@ -20,7 +20,7 @@ const VerifyOtp = () => {
     setLoading(true);
     try {
       if (userId && otp.length === 6) {
-        const response = await AuthServices.verifyOtp({ otp, email: userId });
+        const response = await AuthServices.verifyOtp({ otp, uid: userId });
         toast.success(`${response.message} proceed to login`);
         setLoading(false);
         navigate(SIGNIN)

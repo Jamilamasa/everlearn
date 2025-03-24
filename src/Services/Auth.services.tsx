@@ -14,7 +14,7 @@ const login = async (val: { email: string; password: string }) => {
   const res = await axios.post(`${baseUrl}/api/auth/login`, { ...val });
   return res.data;
 };
-const verifyOtp = async (val: { otp: string; email: string }) => {
+const verifyOtp = async (val: { otp: string; uid: string }) => {
   const res = await axios.post(`${baseUrl}/api/auth/verify-email`, {...val});
   return res.data
 };

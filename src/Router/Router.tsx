@@ -20,7 +20,7 @@ export const router = createBrowserRouter([
     path: ROOT,
     element: (
       <ProtectedRoute>
-        <div>If you see this page, you are logged in</div>
+         <Courses />
       </ProtectedRoute>
     ),
     children: [{index: true, element: <>Dashboard</>}]
