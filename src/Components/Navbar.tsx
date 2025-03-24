@@ -47,9 +47,9 @@ const Navbar = () => {
                     ))}
                 </ul>
                 <div className="hidden md:block">
-                    <button className="text-lg bg-[#00599B] py-4 px-10 text-white rounded-full">
+                    <a href="/signup" className="text-lg bg-[#00599B] py-4 px-10 text-white rounded-full">
                         Get Started
-                    </button>
+                    </a>
                 </div>
             </div>
 

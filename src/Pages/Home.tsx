@@ -15,9 +15,11 @@ const Home = () => {
               Unleash Your Learning Potential. Personalize Your Path with
               everlearn.
             </p>
-            <button className="md:text-lg bg-[#00599B] py-3 md:px-10 px-5 text-white rounded-full">
+            <p>
+            <a href="" className="md:text-lg bg-[#00599B] py-3 md:px-10 px-5 text-white rounded-full">
               Get Started
-            </button>
+            </a>
+            </p>
           </div>
 
           <div className="md:grid grid-cols-2 grid-rows-1 gap-4 hidden">

@@ -1,7 +1,7 @@
 import { useValidateToken } from "@/Hooks/auth.hooks";
 import { ReactNode, useEffect, useState } from "react";
 import { Navigate } from "react-router-dom";
-import { SIGNIN } from "./Router";
+import { HomePage, SIGNIN } from "./Router";
 
 type Props = { children: ReactNode };
 
@@ -15,7 +15,7 @@ const ProtectedRoute = (props: Props) => {
   }, []);
 
   if (!auth) {
-    return <Navigate to={SIGNIN} />;
+    return <Navigate to={HomePage} />;
   }
   return <>{props.children}</>;
 };
