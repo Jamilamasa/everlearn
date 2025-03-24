@@ -1,93 +1,49 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
 // New questions for determining user study preferences and expertise
 const questions = [
   {
-    question: "What is your current educational or professional level?",
-    options: [
-      "High School",
-      "Undergraduate",
-      "Postgraduate",
-      "Professional/Industry Expert",
-    ],
-    correctAnswer: null,
-  },
-  {
-    question: "Which subject areas are you most interested in studying?",
-    options: [
-      "Computer Science / Technology",
-      "Business / Management",
-      "Engineering",
-      "Arts & Humanities",
-      "Health & Medicine",
-      "Social Sciences",
-    ],
-    correctAnswer: null,
-  },
-  {
-    question: "How would you rate your current expertise in your chosen subject area(s)?",
+    id: "skillLevel",
+    question: "What is your current skill level in programming?",
     options: ["Beginner", "Intermediate", "Advanced"],
-    correctAnswer: null,
   },
   {
-    question: "What type of course content do you prefer?",
+    id: "goal",
+    question: "What is your main goal for learning programming?",
     options: [
-      "Video lectures",
-      "Text-based materials",
-      "Interactive exercises/quizzes",
-      "Live sessions or webinars",
+      "Build websites",
+      "Create mobile apps",
+      "Automate tasks",
+      "Get a tech job",
+      "Just exploring / general interest",
     ],
-    correctAnswer: null,
   },
   {
-    question: "How much time per week can you realistically dedicate to studying?",
+    id: "interest",
+    question: "Which type of programming are you most interested in?",
     options: [
-      "Less than 5 hours",
-      "5–10 hours",
-      "10–20 hours",
-      "More than 20 hours",
+      "Web Development",
+      "Mobile Development",
+      "Data Science & AI",
+      "Game Development",
+      "System Programming",
     ],
-    correctAnswer: null,
   },
   {
-    question: "What is your preferred course duration?",
+    id: "timeCommitment",
+    question: "How much time can you commit per week?",
+    options: ["1–2 hours", "3–5 hours", "6–10 hours", "10+ hours"],
+  },
+  {
+    id: "learningFormat",
+    question: "Preferred learning format?",
     options: [
-      "Short courses (less than 4 weeks)",
-      "Medium-length courses (4–8 weeks)",
-      "Long courses (more than 8 weeks)",
+      "Video Lessons",
+      "Interactive Coding",
+      "Text-based Lessons",
+      "Project-based Learning",
     ],
-    correctAnswer: null,
-  },
-  {
-    question: "What learning pace suits you best?",
-    options: ["Self-paced", "Instructor-led", "Blended (mix of both)"],
-    correctAnswer: null,
-  },
-  {
-    question: "How important is hands-on practice (projects, labs) to you?",
-    options: ["Very important", "Somewhat important", "Not important"],
-    correctAnswer: null,
-  },
-  {
-    question: "What is your primary motivation for taking a course?",
-    options: [
-      "Career advancement",
-      "Personal interest",
-      "Skill development",
-      "Obtaining a certification",
-    ],
-    correctAnswer: null,
-  },
-  {
-    question: "Which learning style best describes you?",
-    options: [
-      "Visual (images, videos, diagrams)",
-      "Auditory (lectures, podcasts)",
-      "Kinesthetic (hands-on activities)",
-      "Reading/Writing (text and notes)",
-    ],
-    correctAnswer: null,
   },
 ];
 

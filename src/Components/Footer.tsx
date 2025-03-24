@@ -7,6 +7,7 @@ const Footer = () => {
   useEffect(() => {
     // Set the active page based on the current URL path
     setActivePage(window.location.pathname);
+    console.log(activePage)
   }, []);
 
   const menuItems = [

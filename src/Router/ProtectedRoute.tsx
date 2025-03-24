@@ -1,7 +1,7 @@
 import { useValidateToken } from "@/Hooks/auth.hooks";
 import { ReactNode, useEffect, useState } from "react";
 import { Navigate } from "react-router-dom";
-import { HomePage, SIGNIN } from "./Router";
+import { HomePage } from "./Router";
 
 type Props = { children: ReactNode };
 

@@ -18,5 +18,9 @@ const verifyOtp = async (val: { otp: string; email: string }) => {
   const res = await axios.post(`${baseUrl}/api/auth/verify-email`, {...val});
   return res.data
 };
+const recommend = async (val: { otp: string; email: string }) => {
+  const res = await axios.post(`${baseUrl}/api/recommend`, {...val});
+  return res.data
+};
 
-export default { login, register, verifyOtp };
+export default { login, register, verifyOtp, recommend };

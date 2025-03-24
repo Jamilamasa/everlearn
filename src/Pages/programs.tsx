@@ -17,7 +17,7 @@ const Program: React.FC = () => {
   }, []);
 
   // Callback to be called once the survey is complete
-  const handleSurveyComplete = (answers: any) => {
+  const handleSurveyComplete = () => {
     // Optionally, send the answers to the backend here
     // For now, we simply store a token to mark the survey as complete.
     localStorage.setItem("surveyCompleted", "true");
