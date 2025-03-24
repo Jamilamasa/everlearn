@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import AuthServices from "@/Services/Auth.services";
 
 // New questions for determining user study preferences and expertise
 const questions = [
@@ -93,7 +94,25 @@ const Survey = ({ onClose, onComplete }: SurveyProps) => {
               Thank you for your responses. Your answers have been recorded.
             </p>
             <button
-              onClick={() => {
+              onClick={async () => {
+                const formattedAnswers: Record<string, string> = {};
+
+                answers.forEach((value, index) => {
+                  if (value !== null) {
+                    const questionId = questions[index].id;
+                    const answer = questions[index].options[value];
+                    formattedAnswers[questionId] = answer;
+                  }
+                });
+
+                try {
+                  const email = localStorage.getItem("email") || ""; 
+                  const otp = localStorage.getItem("otp") || "";
+                  await AuthServices.recommend({ otp, email, ...formattedAnswers });
+                } catch (error) {
+                  console.error("Failed to send survey data:", error);
+                }
+
                 onComplete(answers);
                 onClose();
               }}
