@@ -89,26 +89,37 @@ const Survey = ({ onClose, onComplete }: SurveyProps) => {
         <div className="absolute inset-0 bg-black opacity-50"></div>
         <div className="relative bg-white rounded-lg shadow-lg p-8 max-w-md w-full mx-4 overflow-y-auto max-h-full">
           <div className="text-center">
-            <h2 className="text-2xl font-bold mb-4">Survey Complete</h2>
+            <h2 className="text-2xl font-bold mb-4">Complete</h2>
             <p className="text-lg mb-6">
-              Thank you for your responses. Your answers have been recorded.
+              Thank you for your responses.We can now recommend the best Courses for you
             </p>
             <button
               onClick={async () => {
-                const formattedAnswers: Record<string, string> = {};
+                const formattedAnswers: {
+                  skillLevel: string;
+                  goal: string;
+                  interest: string;
+                  timeCommitment: string;
+                  learningFormat: string;
+                } = {
+                  skillLevel: "",
+                  goal: "",
+                  interest: "",
+                  timeCommitment: "",
+                  learningFormat: "",
+                };
 
                 answers.forEach((value, index) => {
                   if (value !== null) {
-                    const questionId = questions[index].id;
+                    const questionId = questions[index].id as keyof typeof formattedAnswers;
                     const answer = questions[index].options[value];
                     formattedAnswers[questionId] = answer;
                   }
                 });
 
                 try {
-                  const email = localStorage.getItem("email") || ""; 
-                  const otp = localStorage.getItem("otp") || "";
-                  await AuthServices.recommend({ otp, email, ...formattedAnswers });
+
+                  await AuthServices.recommend({ ...formattedAnswers });
                 } catch (error) {
                   console.error("Failed to send survey data:", error);
                 }

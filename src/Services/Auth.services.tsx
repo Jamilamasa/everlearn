@@ -18,9 +18,42 @@ const verifyOtp = async (val: { otp: string; uid: string }) => {
   const res = await axios.post(`${baseUrl}/api/auth/verify-email`, {...val});
   return res.data
 };
-const recommend = async (val: { otp: string; email: string }) => {
-  const res = await axios.post(`${baseUrl}/api/recommend`, {...val});
+const authToken = sessionStorage.getItem('k7h4p9d2wq8c6n');
+
+const getCourses = async () => {
+  const res = await axios.get(`${baseUrl}/api/course`, {
+    headers: {
+      'Authorization': `Bearer ${authToken}`
+    }
+  });
+  return res.data;
+};
+
+const getPrograms = async () => {
+  const res = await axios.get(`${baseUrl}/api/programs`, {
+    headers: {
+      'Authorization': `Bearer ${authToken}`
+    }
+  });
+  return res.data;
+};
+
+const addCourseToProgram = async (courseDetails: { title: string; description: string; programId: string }) => {
+  const res = await axios.post(`${baseUrl}/api/programs/add-course`, { ...courseDetails }, {
+    headers: {
+      'Authorization': `Bearer ${authToken}`
+    }
+  });
+  return res.data;
+};
+
+const recommend = async (val: { skillLevel: string, goal:string, interest:string, timeCommitment: string, learningFormat:string }) => {
+  const res = await axios.post(`${baseUrl}/api/recommend/recommend`, {...val}, {
+    headers: {
+      'Authorization': `Bearer ${authToken}`
+    }
+  });
   return res.data
 };
 
-export default { login, register, verifyOtp, recommend };
+export default { login, register, verifyOtp, recommend, getCourses, getPrograms, addCourseToProgram };

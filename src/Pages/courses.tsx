@@ -1,12 +1,27 @@
 import React, { useEffect, useState } from "react";
-import Card from "@/Components/coursesCard";
-import Footer from "@/Components/Footer";
-import Navbar from "@/Components/Navbar";
-import Breadcrumbs from "@/Components/ui/breadcrumbs";
-import QuizPopupChapter4 from "@/Components/QuizPopup";
+import AuthService from '../Services/Auth.services'; // Import AuthService
+import Card from '../Components/coursesCard';
+import Footer from '../Components/Footer';
+import Navbar from '../Components/Navbar';
+import Breadcrumbs from '../Components/ui/breadcrumbs';
+import QuizPopupChapter4 from '../Components/QuizPopup';
+
+interface Course {
+  _id: string;
+  niche: string;
+  image: string;
+  author: string;
+  title: string;
+  time_to_finish: string;
+  number_of_students: number;
+  level: string;
+  lessons: number;
+  price: string;
+}
 
 const Courses: React.FC = () => {
   const [showSurvey, setShowSurvey] = useState(false);
+  const [courses, setCourses] = useState<Course[]>([]); // State to hold courses
 
   useEffect(() => {
     // Check if the survey token exists in localStorage
@@ -16,10 +31,15 @@ const Courses: React.FC = () => {
     }
   }, []);
 
-  // Callback to be called once the survey is complete
+  useEffect(() => {
+    const fetchCourses = async () => {
+      const response = await AuthService.getCourses(); // Fetch courses
+      setCourses(response.data); // Set courses data
+    };
+    fetchCourses();
+  }, []);
+
   const handleSurveyComplete = () => {
-    // Optionally, send the answers to the backend here
-    // For now, we simply store a token to mark the survey as complete.
     localStorage.setItem("surveyCompleted", "true");
     setShowSurvey(false);
   };
@@ -53,42 +73,21 @@ const Courses: React.FC = () => {
 
       {/* Courses Section */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-6 mt-10 px-4 md:px-20 lg:px-80">
-        <Card
-          category="Photography"
-          image="/svg/photo-four.svg"
-          author="Determined-Poitras"
-          title="Create An LMS Website With LearnPress"
-          duration="2 Weeks"
-          students={156}
-          level="All levels"
-          lessons={20}
-          price="$29.0"
-          onClick={handleViewMore}
-        />
-        <Card
-          category="Photography"
-          image="/svg/photo-two.svg"
-          author="Determined-Poitras"
-          title="Create An LMS Website With LearnPress"
-          duration="2 Weeks"
-          students={156}
-          level="All levels"
-          lessons={20}
-          price="$29.0"
-          onClick={handleViewMore}
-        />
-        <Card
-          category="Photography"
-          image="/svg/photo-three.svg"
-          author="Determined-Poitras"
-          title="Create An LMS Website With LearnPress"
-          duration="2 Weeks"
-          students={156}
-          level="All levels"
-          lessons={20}
-          price="$29.0"
-          onClick={handleViewMore}
-        />
+        {courses.map(course => (
+          <Card
+            key={course._id}
+            category={course.niche}
+            image={course.image}
+            author={course.author}
+            title={course.title}
+            duration={course.time_to_finish}
+            students={course.number_of_students}
+            level={course.level}
+            lessons={course.lessons}
+            price={course.price}
+            onClick={handleViewMore}
+          />
+        ))}
       </div>
       <Footer />
 
