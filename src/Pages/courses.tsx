@@ -31,22 +31,32 @@ const Courses: React.FC = () => {
     }
   }, []);
 
-  useEffect(() => {
-    const fetchCourses = async () => {
-      try {
-        const response = await AuthService.getCourses(); // Fetch courses
-        // Filter out items that do not have course details (e.g., missing title)
-        const filteredCourses = response.data.filter(
-          (item: any) => item.title !== undefined
-        );
-        setCourses(filteredCourses);
-        console.log("Courses fetched:", filteredCourses);
-      } catch (error) {
-        console.error("Error fetching courses:", error);
-      }
-    };
+  const fetchCourses = async () => {
+    try {
+      const response = await AuthService.getCourses(); // Fetch courses
+      console.log("API response:", response); // Log the full response
+  
+      // Check if the response is directly an array, or if it's nested in data
+      const coursesArray = Array.isArray(response)
+        ? response
+        : Array.isArray(response.data)
+        ? response.data
+        : [];
+  
+      // Filter out items that do not have course details (e.g., missing title)
+      const filteredCourses = coursesArray.filter(
+        (item: any) => item.title !== undefined
+      );
+      setCourses(filteredCourses);
+      console.log("Courses fetched:", filteredCourses);
+    } catch (error) {
+      console.error("Error fetching courses:", error);
+    }
+  };
+  
     fetchCourses();
-  }, []);
+  
+    
 
   const handleSurveyComplete = () => {
     localStorage.setItem("surveyCompleted", "true");
