@@ -40,6 +40,7 @@ const Courses: React.FC = () => {
           (item: any) => item.title !== undefined
         );
         setCourses(filteredCourses);
+        console.log("Courses fetched:", filteredCourses);
       } catch (error) {
         console.error("Error fetching courses:", error);
       }
